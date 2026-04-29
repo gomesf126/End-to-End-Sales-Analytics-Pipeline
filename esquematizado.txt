@@ -1,0 +1,90 @@
+project/
+│
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   └── output/
+│
+├── src/
+│   ├── extract/
+│   │   └── extract.py
+│   │
+│   ├── transform/
+│   │   ├── cleaning.py
+│   │   ├── feature_store.py
+│   │   ├── features.py
+│   │   ├── feature_product.py
+│   │   ├── feature_customer.py
+│   │   ├── feature_time.py
+│   │   ├── feature_abc.py
+│   │   └── feature_churn.py
+│   │
+│   ├── analytics/
+│   │   ├── metrics.py
+│   │   └── charts.py
+│   │
+│   ├── pipeline/
+│   │   └── pipeline.py
+│   │
+│   ├── load/
+│   │   └── load.py
+│   │
+│   └── config/
+│       └── paths.py
+│
+├── main.py
+├── requirements.txt
+└── README.md
+
+def extract_data():          # extrair_dados
+def clean_data(df):          # limpar_dados
+def build_feature_store(df): # construir_feature_store
+def apply_features(df):      # aplicar_features
+def compute_metrics(df):     # calcular_metricas
+def run_pipeline(df):        # executar_pipeline
+def save_data(df):           # salvar_dados
+
+
+
+limpeza.py
+→ limpar colunas
+→ padronizar nomes
+→ tratar números
+→ tratar datas
+→ tratar nulos
+
+feature_store.py
+→ criar faturamento
+→ criar ano, mes, mes_num, dia
+→ criar nome_completo
+
+features.py
+→ orquestrar feature_cliente, feature_produto, feature_abc, feature_churn
+
+metrics.py
+→ top_produtos, produto_abc, sazonalidade, melhor_mes, relatorio_produto
+
+
+PRODUTO
+top_produtos → top produtos por faturamento
+ranking_produto → ranking já usando feature pronta
+relatorio_produto → junta ranking + ABC + melhor mês
+
+CLIENTE
+top_clientes → clientes que mais faturam
+ticket_cliente → ticket médio por cliente
+
+LOJA
+faturamento_loja → faturamento por loja
+
+TEMPO / SAZONALIDADE
+sazonalidade → faturamento por produto, mês e ano (pivot)
+crescimento_sazonalidade → crescimento entre anos
+melhor_mes_produto → mês com maior faturamento por produto
+
+EFICIÊNCIA DE NEGÓCIO
+produtos_alta_qtd_baixo_fat → produtos que vendem muito mas faturam pouco
+produtos_baixa_qtd_alto_fat → produtos que vendem pouco mas faturam muito
+
+COMPORTAMENTO / CHURN
+clientes_inativos → clientes sem compra recente
