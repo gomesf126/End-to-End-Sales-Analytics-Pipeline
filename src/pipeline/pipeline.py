@@ -1,10 +1,9 @@
 import pandas as pd
-from Demos.OpenEncryptedFileRaw import dst_fname
 
-from src.transform.feature_limpeza import (
-    tratar_number,
-    tratar_nulos_number,
-    tratar_data
+from src.transform.cleaning import (
+   tratar_number,
+   tratar_nulos_number,
+   tratar_data
     )
 def pipeline(df):
     return (
