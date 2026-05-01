@@ -5,9 +5,10 @@ logger = logging.getLogger(__name__)
 
 def ler_csv(arquivo):
     try:
-        df = pd.read_csv(arquivo , sep=',' , encoding='utf8')
+        df = pd.read_csv(arquivo , sep="," , encoding='utf8')
     except Exception:
         logger.exception('Erro ao ler o arquivo %s',arquivo)
+        raise
     return df
 
 def tratar_coluna(df):
@@ -48,16 +49,3 @@ def montar_tabela(tabelas):
     if not tabelas:
         raise ValueError(f'Erro ao montar a tabela {tabelas}')
     return pd.concat(tabelas, ignore_index=True)
-
-arquivos, erros = extrair_arquivos()
-df = montar_tabela(arquivos)
-#print(df.head(4))
-print(df.columns)
-print(df.nunique())
-print(df.isna().sum())
-df['produto'].apply(repr).unique() #codigos escondidos
-import re
-
-mask = df['produto'].str.contains(r'\s|\xa0|\t|\n|\r', regex=True)
-df[mask]
-
