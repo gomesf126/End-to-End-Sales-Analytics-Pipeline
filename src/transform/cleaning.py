@@ -1,10 +1,5 @@
 import pandas as pd
 
-from src.extract.extract import extrair_arquivos,montar_tabela
-
-arquivo, errors = extrair_arquivos()
-df              = montar_tabela(arquivo)
-
 def tratar_number(df):
     return ( df
              .assign(
@@ -30,15 +25,22 @@ def tratar_nulos_number(df):
     )
 
 def tratar_data(df):
-    return(
+     df = df.assign(
+            data = lambda x: pd.to_datetime(x['data']
+                    .astype(str)
+                    .str.strip()
+                    , format='%m/%d/%Y'
+                    , errors= 'coerce')
+        )
+
+     return df
+
+
+
+def faturamento(df):
+    return (
         df.assign(
-            data = lambda x: pd.to_datetime(x['data'].astype(str).str.strip(), errors = 'coerce' , dayfirst=True)
+            faturamento = lambda x: x['preco_unitario'] * x['quantidade_vendida']
         )
     )
 
-df = tratar_number(df)
-df = tratar_nulos_number(df)
-df = tratar_data(df)
-print(df.columns)
-print(df.info())
-print(df.isna().sum())

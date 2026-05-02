@@ -9,6 +9,8 @@ def main():
 
     df = montar_tabela(arquivo)
     print(df.head(2))
+    print(df.columns)
+
     return df
 
 if "__main__" == __name__:
