@@ -1,14 +1,7 @@
-import pandas as pd
-
-from src.transform.cleaning import (
-   tratar_number,
-   tratar_nulos_number,
-   tratar_data
-    )
+from src.transform.features import aplicar_features
 def pipeline(df):
     return (
         df
-        .pipeline(tratar_number)
-        .pipeline(tratar_nulos_number)
-        .pipeline(tratar_data)
+        .pipe(aplicar_features)
+
     )
