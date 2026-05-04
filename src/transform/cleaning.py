@@ -43,7 +43,7 @@ mapa_mes = {
     1:'Jan', 2 :'Fev', 3:'Mar',4:'Abr', 5:'Mai', 6:'Jun',
     7:'Jul', 8:'Ago', 9:'Set', 10:'Out', 11:'Nov', 12:'Dez'
 }
-def padrao_data(df):
+def feature_tempo(df):
     return (
         df.assign(
             dia=lambda x: x['data'].dt.day,
