@@ -16,7 +16,7 @@ def main():
 
     df = pipeline(df)
     metrica = metricas(df)
-
+    print(df.columns)
 
     for nome , tabela in metrica.items():
         print(nome)
