@@ -71,22 +71,18 @@ def churn_cliente(df):
                                     )
         )
         .sort_values('dias_sem_comprar', ascending=False)
-        .head(10)
         .reset_index(drop=True)
     )
+
 def cliente_churn_risco(df):
     return(
             churn_cliente(df)
             .query("segmento == 'Risco'")
-           [['nome_completo','dias_sem_comprar','cliente_inativo','ltv_cliente']]
+           [['nome_completo','dias_sem_comprar','cliente_inativo','segmento','ltv_cliente']]
            .sort_values('ltv_cliente', ascending=False)
            .head(10)
            .reset_index(drop=True)
     )
-
-
-
-
 
 def metricas(df: pd.DataFrame) -> dict:
     return {
