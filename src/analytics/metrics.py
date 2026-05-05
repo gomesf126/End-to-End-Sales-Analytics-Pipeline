@@ -100,6 +100,20 @@ def produto_churn_risco(df:pd.DataFrame, top_10: int=10)->pd.DataFrame:
         .reset_index(drop=True)
     )
 
+def melhor_mes_produto(df):
+    return(df
+        .pivot_table(
+            index=['mes_num','mes'],
+            columns='ano',
+            values='faturamento',
+            aggfunc='sum'
+         )
+        .sort_index()
+        .reset_index()
+    )
+
+
+
 def metricas(df: pd.DataFrame) -> dict:
     return {
         'cliente_top':         cliente_top(df),
@@ -109,5 +123,6 @@ def metricas(df: pd.DataFrame) -> dict:
         'produto_A':           produto_A(df),
         'faturamento_abc':     faturamento_abc(df),
         'cliente_churn_risco': cliente_churn_risco(df),
-        'produto_churn_risco': produto_churn_risco(df)
+        'produto_churn_risco': produto_churn_risco(df),
+        'melhor_mes_produto':  melhor_mes_produto(df)
     }
