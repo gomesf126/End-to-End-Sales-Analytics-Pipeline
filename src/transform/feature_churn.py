@@ -1,12 +1,20 @@
 import pandas as pd
 
-
-def feature_churn_produto(df:pd.DataFrame, dias_churn: int= 90)->pd.DataFrame:
+def feature_churn_cliente(df:pd.DataFrame, dias_churn: int= 90)->pd.DataFrame:
     data_maxima = df['data'].max()
     return(df
            .assign(
-             ultima_compra = lambda x:(x.groupby('nome_completo')['data'].transform('max')),
+             ultima_compra    = lambda x:(x.groupby('nome_completo')['data'].transform('max')),
              dias_sem_comprar = lambda x: ( data_maxima -  x['ultima_compra']).dt.days,
              cliente_inativo  = lambda x:(x['dias_sem_comprar'] > dias_churn)
         )
       )
+def feature_churn_produto(df:pd.DataFrame, dias_churn: int=90)->pd.DataFrame:
+    data_maxima= df['data'].max()
+    return(df
+        .assign(
+        ultima_venda     = lambda x: x.groupby('produto')['data'].transform('max'),
+        dias_sem_venda   = lambda x: (data_maxima - x['ultima_venda']).dt.days,
+        produto_inativo  = lambda x: (x['dias_sem_venda'] > dias_churn)
+        )
+    )

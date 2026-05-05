@@ -65,10 +65,7 @@ def churn_cliente(df):
         [['nome_completo','dias_sem_comprar','cliente_inativo','ltv_cliente']]
         .drop_duplicates('nome_completo')
         .assign(
-        segmento = lambda x: pd.cut(x['dias_sem_comprar'],
-                                    bins=[-1,30,90,180,float('inf')],
-                                    labels=['Ativo','Risco','Inativo','Perdido']
-                                    )
+            segmento = lambda x: pd.cut(x['dias_sem_comprar'], bins=[-1,30,90,180,float('inf')], labels=['Ativo','Risco','Inativo','Perdido'])
         )
         .sort_values('dias_sem_comprar', ascending=False)
         .reset_index(drop=True)
@@ -83,6 +80,25 @@ def cliente_churn_risco(df):
            .head(10)
            .reset_index(drop=True)
     )
+def churn_produto(df):
+    return (df
+        [['produto','dias_sem_venda','produto_inativo','faturamento_produto']]
+        .drop_duplicates('produto')
+        .assign(
+            segmento = lambda x: pd.cut(x['dias_sem_venda'], bins=[-1, 30, 90, 180, float('inf')], labels=['Ativo','Risco','Inativo','Perdido'])
+         )
+        .sort_values('dias_sem_venda', ascending=False)
+        .reset_index(drop=True)
+    )
+def produto_churn_risco(df:pd.DataFrame, top_10: int=10)->pd.DataFrame:
+    return (
+         churn_produto(df)
+        .query("segmento == 'Risco'")
+        [['produto','dias_sem_venda','produto_inativo','segmento','faturamento_produto']]
+        .sort_values(['faturamento_produto','dias_sem_venda'], ascending=[False,False])
+        .head(top_10)
+        .reset_index(drop=True)
+    )
 
 def metricas(df: pd.DataFrame) -> dict:
     return {
@@ -92,6 +108,6 @@ def metricas(df: pd.DataFrame) -> dict:
         'produto_abc':         produto_abc(df),
         'produto_A':           produto_A(df),
         'faturamento_abc':     faturamento_abc(df),
-        'churn_cliente':       churn_cliente(df),
-        'cliente_churn_risco': cliente_churn_risco(df)
+        'cliente_churn_risco': cliente_churn_risco(df),
+        'produto_churn_risco': produto_churn_risco(df)
     }
