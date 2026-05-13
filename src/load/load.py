@@ -1,5 +1,3 @@
-from pywinauto.handleprops import parent
-
 from src.config.paths import DATA_PROCESSED
 import logging
 logger= logging.getLogger(__name__)
