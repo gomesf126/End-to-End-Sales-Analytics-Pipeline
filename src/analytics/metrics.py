@@ -24,7 +24,7 @@ def produto_top(df: pd.DataFrame, top_5: int=5)->pd.DataFrame:
     return(df
         [['produto','faturamento_produto','rank_produto']]
         .drop_duplicates('produto')
-        .sort_values('faturamento_produto')
+        .sort_values('faturamento_produto', ascending=False)
         .head(top_5)
         .reset_index(drop=True)
     )
